@@ -60,6 +60,8 @@ public class UIFormList extends UIElement
 
         this.bar.add(this.search, this.edit, this.close);
         this.add(this.forms, this.bar);
+        
+        this.forms.relative(this).w(1F).h(1F, -30);
 
         this.search.keys().register(Keys.FORMS_FOCUS, this::focusSearch);
 
