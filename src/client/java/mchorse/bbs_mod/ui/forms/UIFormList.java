@@ -48,7 +48,17 @@ public class UIFormList extends UIElement
 
         this.forms = UI.scrollView(0, 0);
         this.forms.scroll.cancelScrolling();
-        this.bar = new UIElement();
+        this.bar = new UIElement()
+        {
+            @Override
+            public void render(UIContext context)
+            {
+                context.batcher.getContext().getMatrices().push();
+                context.batcher.getContext().getMatrices().translate(0, 0, 200);
+                super.render(context);
+                context.batcher.getContext().getMatrices().pop();
+            }
+        };
         this.search = new UITextbox(100, this::search).placeholder(UIKeys.FORMS_LIST_SEARCH);
         this.edit = new UIIcon(Icons.EDIT, this::edit);
         this.edit.tooltip(UIKeys.FORMS_LIST_EDIT, Direction.TOP);
@@ -60,8 +70,6 @@ public class UIFormList extends UIElement
 
         this.bar.add(this.search, this.edit, this.close);
         this.add(this.forms, this.bar);
-        
-        this.forms.relative(this).w(1F).h(1F, -30);
 
         this.search.keys().register(Keys.FORMS_FOCUS, this::focusSearch);
 
